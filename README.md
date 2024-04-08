@@ -1,8 +1,8 @@
-![logo](assets/transparent-logo.png)
+![logo](assets/Flappy_Bird_Logo_2.png)
 
 # FlappyBird_Java
 
 Flappy bird using javax.swing library!
 
-![banner](assets/wished-preview-banner.jpg)
+![banner](assets/banner.jpg)
 
