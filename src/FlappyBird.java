@@ -1,5 +1,3 @@
-package Bird;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -31,7 +29,8 @@ public class FlappyBird extends JFrame {
                 g.fillRect(0, 0, 800, 600); // Background
 
                 g.setColor(Color.green);
-                for (Rectangle pipe : pipes) {
+                for (Rectangle pipe : pipes) 
+                {
                     g.fillRect(pipe.x, pipe.y, pipe.width, pipe.height); // Pipe
                 }
 

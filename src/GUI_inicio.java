@@ -15,6 +15,21 @@ public class GUI_inicio extends JFrame {
         new ImageIcon("opciones.png"),
         new ImageIcon("salir.png")
     };
+    
+    
+    public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI_inicio frame = new GUI_inicio();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
     public GUI_inicio() {
         super("Menu");
@@ -43,11 +58,26 @@ public class GUI_inicio extends JFrame {
         });
     }
 
-    private void selectOption() {
+    private void selectOption()
+    {
         switch (selectedOption) {
             case 0:
-                JOptionPane.showMessageDialog(null, "Acción Jugar");
+                //JOptionPane.showMessageDialog(null, "Acción Jugar");
+                
+            	// Crear una instancia de la clase GameFrame (reemplaza GameFrame con el nombre de tu clase)
+                FlappyBird gameFrame = new FlappyBird();
+                
+                // Configurar el cierre de la ventana
+                gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                
+                // Establecer el tamaño y el diseño
+                gameFrame.setSize(800, 600); // Establece el tamaño deseado
+                gameFrame.setLayout(new BorderLayout()); // O el diseño que prefieras
+                
+                // Hacer visible el frame
+                gameFrame.setVisible(true);
                 break;
+            	
             case 1:
                 JFrame bestTimesFrame = new JFrame("Mejores Tiempos");
                 bestTimesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -68,9 +98,13 @@ public class GUI_inicio extends JFrame {
         }
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
-        g.setColor(Color.BLACK);
+    
+    @Override
+    public void paint(Graphics g) 
+    {
+    	// TODO Auto-generated method stub
+    	super.paint(g);
+    	g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
 
         g.setColor(Color.WHITE);
@@ -92,10 +126,7 @@ public class GUI_inicio extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        GUI_inicio frame = new GUI_inicio();
-        frame.setVisible(true);
-    }
+    
 }
 
 class BestTimesPanel extends JPanel {
@@ -137,8 +168,4 @@ class BestTimesPanel extends JPanel {
         add(closeButton, gbc);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-    }
 }
