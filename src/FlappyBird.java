@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.net.URL;
 
 public class FlappyBird extends JFrame {
     private Timer timer;
@@ -15,28 +16,41 @@ public class FlappyBird extends JFrame {
     private ArrayList<Rectangle> pipes;
     private Random rand;
 
+    private ImageIcon birdIcon;
+    private ImageIcon pipeIcon;
+    private ImageIcon bgIcon;
+
     public FlappyBird() {
         setTitle("Flappy Bird");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
+        pipes = new ArrayList<>(); 
+
+        // Ruta de Imagenes
+        
+        birdIcon = new ImageIcon(getResourceURL("textures/bird.png"));
+        birdIcon = new ImageIcon(birdIcon.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH)); // escalar el bird
+        pipeIcon = new ImageIcon(getResourceURL("textures/pipe.png"));
+        bgIcon = new ImageIcon(getResourceURL("textures/bg.jpeg"));
+
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(Color.cyan);
-                g.fillRect(0, 0, 800, 600); // Background
+                
+                g.drawImage(bgIcon.getImage(), 0, 0, getWidth(), getHeight(), null); // Ajustar el tamaño del fondo para que ocupe toda la ventana
 
-                g.setColor(Color.green);
-                for (Rectangle pipe : pipes) 
-                {
-                    g.fillRect(pipe.x, pipe.y, pipe.width, pipe.height); // Pipe
+                
+                for (Rectangle pipe : pipes) {
+                    g.drawImage(pipeIcon.getImage(), pipe.x, pipe.y, pipe.width, pipe.height, null);
                 }
 
-                g.setColor(Color.red);
-                g.fillRect(100, birdY, 10, 5); // Bird
+                
+                g.drawImage(birdIcon.getImage(), 100, birdY, null);
 
+                
                 g.setColor(Color.black);
                 g.setFont(new Font("Arial", Font.BOLD, 20));
                 g.drawString("Score: " + score, 50, 50);
@@ -69,8 +83,11 @@ public class FlappyBird extends JFrame {
         add(panel);
         setVisible(true);
 
-        pipes = new ArrayList<>();
         rand = new Random();
+    }
+
+    private URL getResourceURL(String resourcePath) {
+        return getClass().getClassLoader().getResource(resourcePath);
     }
 
     public void startGame() {
