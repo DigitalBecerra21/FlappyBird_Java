@@ -64,12 +64,50 @@ public class FlappyBird_Panel extends JPanel {
         pipes.add(pipe);
     }
 
-    public void movePipes() {
-        for (Pipe pipe : pipes) {
+    public void movePipes() 
+    {
+    	for (Pipe pipe : pipes) 
+    	{
             pipe.move();
+        }
+        if (checkCollision()) 
+        {
+            gameOver();
         }
         repaint();
     }
+    
+    private boolean checkCollision() 
+    {
+        Rectangle birdBounds = bird.getBounds();
+        for (Pipe pipe : pipes) {
+            Rectangle pipeBounds = new Rectangle(pipe.x, 0, pipe.width, pipe.gapY);
+            Rectangle lowerPipeBounds = new Rectangle(pipe.x, pipe.gapY + pipe.gapHeight, pipe.width, HEIGHT - (pipe.gapY + pipe.gapHeight));
+            if (birdBounds.intersects(pipeBounds) || birdBounds.intersects(lowerPipeBounds)) {
+                return true; // Hay colisión
+            }
+        }
+        return false; // No hay colisión
+    }
+    
+    private void gameOver() {
+        timer.stop(); // Detener el temporizador
+        int choice = JOptionPane.showConfirmDialog(this, "Game Over! ¿Quieres volver a intentarlo?", "Game Over", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            restartGame(); // Reiniciar el juego si el jugador elige volver a intentarlo
+        } else {
+            System.exit(0); // Salir del juego si el jugador elige no volver a intentarlo
+        }
+    }
+
+    private void restartGame() {
+        pipes.clear(); // Limpiar todas las tuberías
+        bird = new Bird(100, HEIGHT / 2); // Reiniciar el pájaro
+        timer.start(); // Reiniciar el temporizador
+        startPipeGenerators(); // Reiniciar la generación de tuberías
+    }
+
+
 
     @Override
     protected void paintComponent(Graphics g) {
