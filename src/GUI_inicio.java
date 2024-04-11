@@ -90,17 +90,18 @@ public class GUI_inicio extends JFrame {
                 //JOptionPane.showMessageDialog(null, "Acción Jugar");
 
                 // Crear una instancia de la clase GameFrame (reemplaza GameFrame con el nombre de tu clase)
-                FlappyBird gameFrame = new FlappyBird();
+            	SwingUtilities.invokeLater(() -> {
+                    JFrame frame = new JFrame("Flappy Bird");
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.setResizable(false);
 
-                // Configurar el cierre de la ventana
-                gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    FlappyBird_Panel panel = new FlappyBird_Panel();
+                    frame.getContentPane().add(panel);
 
-                // Establecer el tamaño y el diseño
-                gameFrame.setSize(800, 600); // Establece el tamaño deseado
-                gameFrame.setLayout(new BorderLayout()); // O el diseño que prefieras
-
-                // Hacer visible el frame
-                gameFrame.setVisible(true);
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                });
                 break;
 
             case 1:
