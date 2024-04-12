@@ -21,13 +21,16 @@ public class Pipe
 
     public void draw(Graphics g) 
     {
+        // g.fillRect(x, y, WIDTH, HEIGHT);
+         
         g.setColor(color);
         g.fillRect(x, 0, width, gapY);
         g.fillRect(x, gapY + gapHeight, width, FlappyBird_Panel.HEIGHT - (gapY + gapHeight));
         
         g.setColor(Color.black);
-        g.setFont(new Font("Arial", Font.PLAIN, 96));
-        g.drawString(this.DebugString, x+30, gapY);
+        g.setFont(new Font("Arial", Font.PLAIN, 46));
+        g.drawString(this.DebugString, x+30, gapY-30);
+        
     }
 
     public void move() 

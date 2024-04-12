@@ -17,9 +17,11 @@ public class FlappyBird_Panel extends JPanel {
     
  // Start pipe generator threads
     Thread firstPipe = new Thread(new PipeGenerator(this, this.WIDTH,"1"));
+    
     Thread secondPipe = new Thread(new PipeGenerator(this, this.WIDTH + 200,"2"));
     Thread thirdPipe = new Thread(new PipeGenerator(this, this.WIDTH + 400,"3"));
     Thread fourthPipe = new Thread(new PipeGenerator(this, this.WIDTH + 600,"4"));
+    
 
     public FlappyBird_Panel() 
     {
@@ -41,8 +43,6 @@ public class FlappyBird_Panel extends JPanel {
             }
         });
         timer.start();
-
-        
         
         startPipeGenerators();
         
@@ -58,17 +58,21 @@ public class FlappyBird_Panel extends JPanel {
     private void startPipeGenerators() 
     {
         firstPipe.start();
+        
         secondPipe.start();
         thirdPipe.start();
         fourthPipe.start();
+        
     }
     
     private void stopPipeGenerators()
     {
     	firstPipe.interrupt();
+    	
     	secondPipe.interrupt();
     	thirdPipe.interrupt();
     	fourthPipe.interrupt();
+    	
     }
 
     public void addPipe(Pipe pipe) {
