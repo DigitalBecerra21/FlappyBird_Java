@@ -8,17 +8,20 @@ public class Bird {
     private static final int WIDTH = 40;
     private static final int HEIGHT = 30;
 
-    public Bird(int x, int y) {
+    public Bird(int x, int y) 
+    {
         this.x = x;
         this.y = y;
         this.velocity = 0;
     }
 
-    public void jump() {
+    public void jump() 
+    {
         velocity = -10; // Adjust as needed for desired jump height
     }
 
-    public void move() {
+    public void move() 
+    {
         y += velocity;
         
      // Limitar la posición del pájaro dentro de los límites de la pantalla
@@ -34,11 +37,18 @@ public class Bird {
         }
     }
 
-    public Rectangle getBounds() {
+    public Rectangle getBounds() 
+    {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
+    
+    public int getX() 
+    {
+        return x;
+    }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g) 
+    {
         g.setColor(Color.YELLOW); // Change color as desired
        // g.fillRect(x, y, WIDTH, HEIGHT);
         g.fillOval(x, y, WIDTH, HEIGHT);

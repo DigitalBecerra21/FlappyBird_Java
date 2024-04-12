@@ -7,20 +7,26 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlappyBird_Panel extends JPanel {
-    public static final int WIDTH = 800;
+public class FlappyBird_Panel extends JPanel 
+{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
     private List<Pipe> pipes;
     private Timer timer;
     private Bird bird; // Agrega el objeto Bird
+    private ScoreCounter scoreCounter = new ScoreCounter(WIDTH/2, 20); // Posición del contador;
     
  // Start pipe generator threads
-    Thread firstPipe = new Thread(new PipeGenerator(this, this.WIDTH,"1"));
-    
-    Thread secondPipe = new Thread(new PipeGenerator(this, this.WIDTH + 200,"2"));
-    Thread thirdPipe = new Thread(new PipeGenerator(this, this.WIDTH + 400,"3"));
-    Thread fourthPipe = new Thread(new PipeGenerator(this, this.WIDTH + 600,"4"));
+    Thread firstPipe;
+    Thread secondPipe;
+    Thread thirdPipe;
+    Thread fourthPipe;
     
 
     public FlappyBird_Panel() 
@@ -41,6 +47,7 @@ public class FlappyBird_Panel extends JPanel {
                 movePipes();
                 bird.move(); // Mueve el pájaro en cada iteración del timer
             }
+            
         });
         timer.start();
         
@@ -57,8 +64,12 @@ public class FlappyBird_Panel extends JPanel {
 
     private void startPipeGenerators() 
     {
+    	 firstPipe = new Thread(new PipeGenerator(this, this.WIDTH,"1"));
+         secondPipe = new Thread(new PipeGenerator(this, this.WIDTH + 200,"2"));
+         thirdPipe = new Thread(new PipeGenerator(this, this.WIDTH + 400,"3"));
+         fourthPipe = new Thread(new PipeGenerator(this, this.WIDTH + 600,"4"));
+    	
         firstPipe.start();
-        
         secondPipe.start();
         thirdPipe.start();
         fourthPipe.start();
@@ -67,11 +78,19 @@ public class FlappyBird_Panel extends JPanel {
     
     private void stopPipeGenerators()
     {
-    	firstPipe.interrupt();
-    	
-    	secondPipe.interrupt();
-    	thirdPipe.interrupt();
-    	fourthPipe.interrupt();
+    	// Detener todos los hilos generadores de tuberías
+        if (firstPipe != null) {
+            firstPipe.interrupt();
+        }
+        if (secondPipe != null) {
+            secondPipe.interrupt();
+        }
+        if (thirdPipe != null) {
+            thirdPipe.interrupt();
+        }
+        if (fourthPipe != null) {
+            fourthPipe.interrupt();
+        }
     	
     }
 
@@ -90,6 +109,9 @@ public class FlappyBird_Panel extends JPanel {
             gameOver();
         }
         repaint();
+        
+        // Verifica si el pájaro pasa por una tubería y actualiza el puntaje
+        checkScore();
     }
     
     private boolean checkCollision() 
@@ -105,14 +127,33 @@ public class FlappyBird_Panel extends JPanel {
         return false; // No hay colisión
     }
     
-    private void gameOver() {
+    private void checkScore() 
+    {
+    	Rectangle birdBounds = bird.getBounds();
+        for (Pipe pipe : pipes) {
+            if (pipe.x + pipe.width < bird.getX() && !pipe.isCounted()) {
+                scoreCounter.incrementScore();
+
+                pipe.setCounted(true);
+            }
+        }
+    }
+
+    
+    private void gameOver() 
+    {
         timer.stop(); // Detener el temporizador
         int choice = JOptionPane.showConfirmDialog(this, "Game Over! ¿Quieres volver a intentarlo?", "Game Over", JOptionPane.YES_NO_OPTION);
-        if (choice == JOptionPane.YES_OPTION) {
-            restartGame(); // Reiniciar el juego si el jugador elige volver a intentarlo
-        } else {
-            System.exit(0); // Salir del juego si el jugador elige no volver a intentarlo
-        }
+          if (choice == JOptionPane.YES_OPTION) 
+          {
+             restartGame(); // Reiniciar el juego si el jugador elige volver a intentarlo
+             
+          } 
+          else 
+         {
+             System.exit(0); // Salir del juego si el jugador elige no volver a intentarlo
+         }
+          scoreCounter.resetScore();
     }
 
     private void restartGame() {
@@ -126,7 +167,8 @@ public class FlappyBird_Panel extends JPanel {
 
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) 
+    {
         super.paintComponent(g);
         // Draw pipes
         for (Pipe pipe : pipes) {
@@ -135,5 +177,8 @@ public class FlappyBird_Panel extends JPanel {
         
      // Dibujar el pájaro
         bird.draw(g);
+        
+     // Dibuja el contador de puntaje
+        scoreCounter.draw(g);
     }
 }
