@@ -14,6 +14,12 @@ public class FlappyBird_Panel extends JPanel {
     private List<Pipe> pipes;
     private Timer timer;
     private Bird bird; // Agrega el objeto Bird
+    
+ // Start pipe generator threads
+    Thread firstPipe = new Thread(new PipeGenerator(this, this.WIDTH,"1"));
+    Thread secondPipe = new Thread(new PipeGenerator(this, this.WIDTH + 200,"2"));
+    Thread thirdPipe = new Thread(new PipeGenerator(this, this.WIDTH + 400,"3"));
+    Thread fourthPipe = new Thread(new PipeGenerator(this, this.WIDTH + 600,"4"));
 
     public FlappyBird_Panel() 
     {
@@ -36,7 +42,8 @@ public class FlappyBird_Panel extends JPanel {
         });
         timer.start();
 
-        // Start pipe generator threads
+        
+        
         startPipeGenerators();
         
      // Agrega un MouseListener para manejar los clics y hacer que el pájaro salte
@@ -48,16 +55,20 @@ public class FlappyBird_Panel extends JPanel {
         });
     }
 
-    private void startPipeGenerators() {
-        Thread firstPipe = new Thread(new PipeGenerator(this, this.WIDTH,"1"));
-        Thread secondPipe = new Thread(new PipeGenerator(this, this.WIDTH + 200,"2"));
-        Thread thirdPipe = new Thread(new PipeGenerator(this, this.WIDTH + 400,"3"));
-        Thread fourthPipe = new Thread(new PipeGenerator(this, this.WIDTH + 600,"4"));
-
+    private void startPipeGenerators() 
+    {
         firstPipe.start();
         secondPipe.start();
         thirdPipe.start();
         fourthPipe.start();
+    }
+    
+    private void stopPipeGenerators()
+    {
+    	firstPipe.interrupt();
+    	secondPipe.interrupt();
+    	thirdPipe.interrupt();
+    	fourthPipe.interrupt();
     }
 
     public void addPipe(Pipe pipe) {
@@ -101,6 +112,7 @@ public class FlappyBird_Panel extends JPanel {
     }
 
     private void restartGame() {
+    	stopPipeGenerators();
         pipes.clear(); // Limpiar todas las tuberías
         bird = new Bird(100, HEIGHT / 2); // Reiniciar el pájaro
         timer.start(); // Reiniciar el temporizador
