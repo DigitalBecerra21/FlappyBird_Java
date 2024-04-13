@@ -16,7 +16,8 @@ public class PipeGenerator implements Runnable {
     public void run() {
     	while (!Thread.currentThread().isInterrupted()) {
             try {
-                int gapY = (int) (Math.random() * (FlappyBird_Panel.HEIGHT - 200)) + 50;
+            	                           //Fórmula para generar un int entre [Altura del panel-200 y 200]
+                int gapY = (int) (Math.random() * ((FlappyBird_Panel.HEIGHT - 200) - (200) +1)) + 200;
                 int gapHeight = 150;
                 int width = 80;
                 int timeBetweenPipes = 7000;
