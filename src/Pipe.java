@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class Pipe 
 {
@@ -10,8 +14,10 @@ public class Pipe
     String DebugString;
     boolean counted;
 
-    public Pipe(int x, int gapY, int gapHeight, int width, Color color, String DebugString) 
-    {
+    private BufferedImage pipeImageTop; // Textura para la tubería superior
+    private BufferedImage pipeImageBottom; // Textura para la tubería inferior
+    
+    public Pipe(int x, int gapY, int gapHeight, int width, Color color, String DebugString) {
         this.x = x;
         this.gapY = gapY;
         this.gapHeight = gapHeight;
@@ -19,23 +25,30 @@ public class Pipe
         this.color = color;
         this.DebugString = DebugString;
         this.counted = false;
-    }
 
-    public void draw(Graphics g) 
-    {
-        // g.fillRect(x, y, WIDTH, HEIGHT);
-        g.setColor(color);
-        g.fillRect(x, 0, width, gapY);
-        g.fillRect(x, gapY + gapHeight, width, FlappyBird_Panel.HEIGHT - (gapY + gapHeight));
+        // Cargar las imágenes de la tubería desde la carpeta textures
+        try {
+            pipeImageTop = ImageIO.read(new File("src/textures/pipe.png")); // Textura para la tubería superior
+            pipeImageBottom = ImageIO.read(new File("src/textures/pipe2.png")); // Textura para la tubería inferior
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
         
+
+    public void draw(Graphics g) {
+        
+        g.drawImage(pipeImageTop, x, 0, width, gapY, null); // Dibuja la parte superior de la tubería con la textura de pipe.png
+        g.drawImage(pipeImageBottom, x, gapY + gapHeight, width, FlappyBird_Panel.HEIGHT - (gapY + gapHeight), null); // Dibuja la parte inferior de la tubería con la textura de pipe2.png
+
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.PLAIN, 46));
-        g.drawString(this.DebugString, x+30, gapY-30);
+        g.drawString(this.DebugString, x + 30, gapY - 30);
     }
 
     public void move() 
     {
-        x -= 4; // Move the pipe to the left
+        x -= 4; // Mueve la tubería hacia la izquierda
     }
     
     public boolean isCounted() {

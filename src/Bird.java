@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class Bird {
     private int x;
@@ -7,14 +11,24 @@ public class Bird {
 
     private static final int WIDTH = 40;
     private static final int HEIGHT = 30;
+    
+    private BufferedImage birdImage;
 
     public Bird(int x, int y) 
     {
         this.x = x;
         this.y = y;
         this.velocity = 0;
+    
+     // Cargar la imagen del pájaro desde la carpeta textures
+        try {
+            birdImage = ImageIO.read(new File("src/textures/bird.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
+    
+    
     public void jump() 
     {
         velocity = -10; // Adjust as needed for desired jump height
@@ -49,8 +63,6 @@ public class Bird {
 
     public void draw(Graphics g) 
     {
-        g.setColor(Color.YELLOW); // Change color as desired
-       // g.fillRect(x, y, WIDTH, HEIGHT);
-        g.fillOval(x, y, WIDTH, HEIGHT);
+    	 g.drawImage(birdImage, x, y, WIDTH, HEIGHT, null);
     }
 }

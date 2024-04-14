@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +32,16 @@ public class FlappyBird_Panel extends JPanel
     Thread thirdPipe;
     Thread fourthPipe;
     
+    private BufferedImage backgroundImage;
 
     public FlappyBird_Panel() 
     {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setBackground(Color.CYAN);
+        try {
+            backgroundImage = ImageIO.read(new File("src/textures/bg.jpeg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         pipes = new ArrayList<>();
         
      // Inicializa el pájaro
@@ -170,6 +179,9 @@ public class FlappyBird_Panel extends JPanel
     protected void paintComponent(Graphics g) 
     {
         super.paintComponent(g);
+        // Dibujar el fondo
+        g.drawImage(backgroundImage, 0, 0, WIDTH, HEIGHT, null);
+        
         // Draw pipes
         for (Pipe pipe : pipes) {
             pipe.draw(g);
