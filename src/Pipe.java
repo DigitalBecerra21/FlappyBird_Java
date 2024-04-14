@@ -37,13 +37,22 @@ public class Pipe
         
 
     public void draw(Graphics g) {
-        
-        g.drawImage(pipeImageTop, x, 0, width, gapY, null); // Dibuja la parte superior de la tubería con la textura de pipe.png
-        g.drawImage(pipeImageBottom, x, gapY + gapHeight, width, FlappyBird_Panel.HEIGHT - (gapY + gapHeight), null); // Dibuja la parte inferior de la tubería con la textura de pipe2.png
 
+        // Recángulos verdes
+        /*
+        g.setColor(color);
+        g.fillRect(x, 0, width, gapY);
+        g.fillRect(x, gapY + gapHeight, width, FlappyBird_Panel.HEIGHT - (gapY + gapHeight));
+        */
+
+        // Dibujar las imágenes de las tuberías
+        g.drawImage(pipeImageTop, x, gapY-400, width, 400, null); // Dibujar la tubería superior
+        g.drawImage(pipeImageBottom, x, gapY + gapHeight, width, 400, null); // Dibujar la tubería inferior
+        
+        //Número de hilo
         g.setColor(Color.black);
         g.setFont(new Font("Arial", Font.PLAIN, 46));
-        g.drawString(this.DebugString, x + 30, gapY - 30);
+        g.drawString(this.DebugString, x + 30, gapY - 40);
     }
 
     public void move() 
