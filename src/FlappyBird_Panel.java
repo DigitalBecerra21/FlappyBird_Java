@@ -62,19 +62,21 @@ public class FlappyBird_Panel extends JPanel
         });
         timer.start();
         
+        //Iniciar los 4 hilos para generar tuberías
         startPipeGenerators();
-
+        //Escuchar "Enter" y "Click derecho"
         keyAndMouseListeners();
         
     }
 
     private void startPipeGenerators() 
     {
+        //Inicialixar nuevos hilos
     	 firstPipe = new Thread(new PipeGenerator(this, WIDTH,"1"));
          secondPipe = new Thread(new PipeGenerator(this, WIDTH + 200,"2"));
          thirdPipe = new Thread(new PipeGenerator(this, WIDTH + 400,"3"));
          fourthPipe = new Thread(new PipeGenerator(this, WIDTH + 600,"4"));
-    	
+    	//Correr los nuevos hilos
         firstPipe.start();
         secondPipe.start();
         thirdPipe.start();
@@ -84,7 +86,7 @@ public class FlappyBird_Panel extends JPanel
     
     private void stopPipeGenerators()
     {
-    	// Detener todos los hilos generadores de tuberías
+    	// Detener todos los hilos generadores de tuberías SOLO si NO están vacíos
         if (firstPipe != null) {
             firstPipe.interrupt();
         }
@@ -106,6 +108,7 @@ public class FlappyBird_Panel extends JPanel
 
     public void movePipes() 
     {
+        //Función iterada constantemente por le Timer
     	for (Pipe pipe : pipes) 
     	{
             pipe.move();
@@ -122,9 +125,11 @@ public class FlappyBird_Panel extends JPanel
     
     private boolean checkCollision() 
     {
-        Rectangle birdBounds = bird.getBounds();
+        Rectangle birdBounds = bird.getBounds(); //Collider del pájaro
         for (Pipe pipe : pipes) {
+            //Collider de la tubería superior
             Rectangle pipeBounds = new Rectangle(pipe.x, 0, pipe.width, pipe.gapY);
+            //Collider de la tubería inferior
             Rectangle lowerPipeBounds = new Rectangle(pipe.x, pipe.gapY + pipe.gapHeight, pipe.width, HEIGHT - (pipe.gapY + pipe.gapHeight));
             if (birdBounds.intersects(pipeBounds) || birdBounds.intersects(lowerPipeBounds)) {
                 return true; // Hay colisión
@@ -136,9 +141,10 @@ public class FlappyBird_Panel extends JPanel
     private void checkScore() 
     {
         for (Pipe pipe : pipes) {
+            //Si el pájaro rebasa la pipe y esta no ha sido contada aún
             if (pipe.x + pipe.width < bird.getX() && !pipe.isCounted()) {
+                //Entonces incrementa el score y se cuenta la pipe
                 scoreCounter.incrementScore();
-
                 pipe.setCounted(true);
             }
         }
@@ -151,7 +157,6 @@ public class FlappyBird_Panel extends JPanel
           if (choice == JOptionPane.YES_OPTION) 
           {
              restartGame(); // Reiniciar el juego si el jugador elige volver a intentarlo
-             
           } 
           else 
          {
@@ -179,7 +184,6 @@ public class FlappyBird_Panel extends JPanel
         });
 
         //Keylistener para saltar con ENTER
-
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -196,18 +200,19 @@ public class FlappyBird_Panel extends JPanel
     protected void paintComponent(Graphics g) 
     {
         super.paintComponent(g);
+
         // Dibujar el fondo
         g.drawImage(backgroundImage, 0, 0, WIDTH, HEIGHT, null);
-        
+
         // Draw pipes
         for (Pipe pipe : pipes) {
             pipe.draw(g);
         }
-        
-     // Dibujar el pájaro
+
+        //Dibujar el pájaro
         bird.draw(g);
-        
-     // Dibuja el contador de puntaje
+
+        //Dibuja el contador de puntaje
         scoreCounter.draw(g);
     }
 }
