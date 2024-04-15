@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FlappyBird_Panel extends JPanel 
 {
@@ -69,6 +71,19 @@ public class FlappyBird_Panel extends JPanel
                 bird.jump(); // Hace que el pájaro salte cuando se hace clic
             }
         });
+
+        //Keylistener para saltar con ENTER
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    bird.jump(); // Hace que el pájaro salte cuando se presiona la tecla "Enter"
+                }
+            }
+        });
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     private void startPipeGenerators() 
