@@ -63,35 +63,17 @@ public class FlappyBird_Panel extends JPanel
         timer.start();
         
         startPipeGenerators();
+
+        keyAndMouseListeners();
         
-     // Agrega un MouseListener para manejar los clics y hacer que el pájaro salte
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                bird.jump(); // Hace que el pájaro salte cuando se hace clic
-            }
-        });
-
-        //Keylistener para saltar con ENTER
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    bird.jump(); // Hace que el pájaro salte cuando se presiona la tecla "Enter"
-                }
-            }
-        });
-        setFocusable(true);
-        requestFocusInWindow();
     }
 
     private void startPipeGenerators() 
     {
-    	 firstPipe = new Thread(new PipeGenerator(this, this.WIDTH,"1"));
-         secondPipe = new Thread(new PipeGenerator(this, this.WIDTH + 200,"2"));
-         thirdPipe = new Thread(new PipeGenerator(this, this.WIDTH + 400,"3"));
-         fourthPipe = new Thread(new PipeGenerator(this, this.WIDTH + 600,"4"));
+    	 firstPipe = new Thread(new PipeGenerator(this, WIDTH,"1"));
+         secondPipe = new Thread(new PipeGenerator(this, WIDTH + 200,"2"));
+         thirdPipe = new Thread(new PipeGenerator(this, WIDTH + 400,"3"));
+         fourthPipe = new Thread(new PipeGenerator(this, WIDTH + 600,"4"));
     	
         firstPipe.start();
         secondPipe.start();
@@ -153,7 +135,6 @@ public class FlappyBird_Panel extends JPanel
     
     private void checkScore() 
     {
-    	Rectangle birdBounds = bird.getBounds();
         for (Pipe pipe : pipes) {
             if (pipe.x + pipe.width < bird.getX() && !pipe.isCounted()) {
                 scoreCounter.incrementScore();
@@ -163,7 +144,6 @@ public class FlappyBird_Panel extends JPanel
         }
     }
 
-    
     private void gameOver() 
     {
         timer.stop(); // Detener el temporizador
@@ -188,7 +168,29 @@ public class FlappyBird_Panel extends JPanel
         startPipeGenerators(); // Reiniciar la generación de tuberías
     }
 
+    public void keyAndMouseListeners()
+    {
+        // Agrega un MouseListener para manejar los clics y hacer que el pájaro salte
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                bird.jump(); // Hace que el pájaro salte cuando se hace clic
+            }
+        });
 
+        //Keylistener para saltar con ENTER
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    bird.jump(); // Hace que el pájaro salte cuando se presiona la tecla "Enter"
+                }
+            }
+        });
+        setFocusable(true);
+        requestFocusInWindow();
+    }
 
     @Override
     protected void paintComponent(Graphics g) 

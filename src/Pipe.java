@@ -40,7 +40,7 @@ public class Pipe
 
         int fixedHeigh = 400;
 
-        // Recángulos verdes
+        // Green rectangles (FOR DEBUGGING)
         /*
         g.setColor(color);
         g.fillRect(x, 0, width, gapY);
