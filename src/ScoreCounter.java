@@ -12,7 +12,7 @@ public class ScoreCounter
         this.x = x;
         this.y = y;
         this.score = 0;
-        this.font = new Font("Arial", Font.BOLD, 52);
+        this.font = new Font("Arial", Font.BOLD, 62);
     }
 
     public void incrementScore() 
@@ -25,10 +25,19 @@ public class ScoreCounter
         score = 0;
     }
 
-    public void draw(Graphics g) 
-    {
-        g.setFont(font);
-        g.setColor(Color.BLACK);
-        g.drawString(""+score, x, y);
+    public void draw(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setFont(font);
+
+        // Dibujar el contorno del texto
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(String.valueOf(score), x - 2, y);
+        g2d.drawString(String.valueOf(score), x + 2, y);
+        g2d.drawString(String.valueOf(score), x, y - 2);
+        g2d.drawString(String.valueOf(score), x, y + 2);
+
+        // Dibujar el texto
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(String.valueOf(score), x, y);
     }
 }

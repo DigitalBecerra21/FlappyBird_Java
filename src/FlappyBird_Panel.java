@@ -24,7 +24,7 @@ public class FlappyBird_Panel extends JPanel
     private List<Pipe> pipes;
     private Timer timer;
     private Bird bird; // Agrega el objeto Bird
-    private ScoreCounter scoreCounter = new ScoreCounter(WIDTH/2, 50); // Posición del contador;
+    private ScoreCounter scoreCounter = new ScoreCounter(WIDTH/2, 60); // Posición del contador;
     
  // Start pipe generator threads
     Thread firstPipe;
