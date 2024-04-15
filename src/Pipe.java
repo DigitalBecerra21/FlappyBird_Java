@@ -38,6 +38,8 @@ public class Pipe
 
     public void draw(Graphics g) {
 
+        int fixedHeigh = 400;
+
         // Recángulos verdes
         /*
         g.setColor(color);
@@ -46,8 +48,8 @@ public class Pipe
         */
 
         // Dibujar las imágenes de las tuberías
-        g.drawImage(pipeImageTop, x, gapY-400, width, 400, null); // Dibujar la tubería superior
-        g.drawImage(pipeImageBottom, x, gapY + gapHeight, width, 400, null); // Dibujar la tubería inferior
+        g.drawImage(pipeImageTop, x, gapY-fixedHeigh, width, fixedHeigh, null); // Dibujar la tubería superior
+        g.drawImage(pipeImageBottom, x, gapY + gapHeight, width, fixedHeigh, null); // Dibujar la tubería inferior
         
         //Número de hilo
         g.setColor(Color.black);
