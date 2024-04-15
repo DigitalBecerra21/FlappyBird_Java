@@ -10,12 +10,6 @@ public class GUI_inicio extends JComponent implements KeyListener {
     private static final long serialVersionUID = 1L;
     private int selectedOption = 0;
     private String[] options = {"Jugar", "Mejores Tiempos", "Opciones", "Salir"};
-    private ImageIcon[] icons = {
-            new ImageIcon("jugar.png"),
-            new ImageIcon("mejores-tiempos.png"),
-            new ImageIcon("opciones.png"),
-            new ImageIcon("salir.png")
-    };
     private Image backgroundImage;
 
     public static void main(String[] args) {
@@ -82,12 +76,6 @@ public class GUI_inicio extends JComponent implements KeyListener {
             // Dibujar el texto de la opción
             g.setColor(Color.WHITE);
             g.drawString(options[i], 300, 360 + 50 * i);
-
-            // Dibujar el icono
-            if (i < icons.length) {
-                Image icon = icons[i].getImage();
-                g.drawImage(icon, 200, 200 + 50 * i, this);
-            }
         }
     }
 

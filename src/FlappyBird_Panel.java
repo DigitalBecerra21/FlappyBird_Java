@@ -71,7 +71,7 @@ public class FlappyBird_Panel extends JPanel
 
     private void startPipeGenerators() 
     {
-        //Inicialixar nuevos hilos
+        //Inicializar nuevos hilos
     	 firstPipe = new Thread(new PipeGenerator(this, WIDTH,"1"));
          secondPipe = new Thread(new PipeGenerator(this, WIDTH + 200,"2"));
          thirdPipe = new Thread(new PipeGenerator(this, WIDTH + 400,"3"));
@@ -159,9 +159,9 @@ public class FlappyBird_Panel extends JPanel
              restartGame(); // Reiniciar el juego si el jugador elige volver a intentarlo
           } 
           else 
-         {
+          {
              System.exit(0); // Salir del juego si el jugador elige no volver a intentarlo
-         }
+          }
           scoreCounter.resetScore();
     }
 
