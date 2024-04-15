@@ -76,12 +76,12 @@ public class GUI_inicio extends JComponent implements KeyListener {
             // Dibujar el indicador ">"
             if (i == selectedOption) {
                 g.setColor(Color.RED);
-                g.drawString(">", 260, 218 + 50 * i);
+                g.drawString(">", 260, 358 + 50 * i);
             }
 
             // Dibujar el texto de la opción
             g.setColor(Color.WHITE);
-            g.drawString(options[i], 300, 220 + 50 * i);
+            g.drawString(options[i], 300, 360 + 50 * i);
 
             // Dibujar el icono
             if (i < icons.length) {
