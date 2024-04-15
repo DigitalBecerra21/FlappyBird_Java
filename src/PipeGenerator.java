@@ -22,9 +22,7 @@ public class PipeGenerator implements Runnable {
                 int width = 80;
                 int timeBetweenPipes = 7000;
 
-                Color color = Color.GREEN;
-
-                Pipe pipe = new Pipe(this.initialPosition, gapY, gapHeight, width, color, this.DebugString);
+                Pipe pipe = new Pipe(this.initialPosition, gapY, gapHeight, width, this.DebugString);
                 panel.addPipe(pipe);
 
                 Thread.sleep(timeBetweenPipes);

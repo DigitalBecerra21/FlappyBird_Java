@@ -10,19 +10,18 @@ public class Pipe
     int gapY;
     int gapHeight;
     int width;
-    Color color;
+    Color color = Color.GREEN;
     String DebugString;
     boolean counted;
 
     private BufferedImage pipeImageTop; // Textura para la tubería superior
     private BufferedImage pipeImageBottom; // Textura para la tubería inferior
     
-    public Pipe(int x, int gapY, int gapHeight, int width, Color color, String DebugString) {
+    public Pipe(int x, int gapY, int gapHeight, int width, String DebugString) {
         this.x = x;
         this.gapY = gapY;
         this.gapHeight = gapHeight;
         this.width = width;
-        this.color = color;
         this.DebugString = DebugString;
         this.counted = false;
 
